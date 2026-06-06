@@ -1,0 +1,90 @@
+\section{The AM--GM Inequality}
+
+One of the most useful elementary inequalities in mathematics relates two natural ways of averaging a collection of nonnegative numbers: their arithmetic mean and their geometric mean. We begin by defining both quantities.
+
+\begin{definition}[Arithmetic and geometric mean]
+Let $a_1, a_2, \dots, a_n$ be nonnegative real numbers. Their \emph{arithmetic mean} is
+\[
+A = \frac{a_1 + a_2 + \cdots + a_n}{n},
+\]
+and their \emph{geometric mean} is
+\[
+G = \sqrt[n]{a_1 a_2 \cdots a_n}.
+\]
+\end{definition}
+
+The inequality between these two means can now be stated.
+
+\begin{theorem}[AM--GM inequality]\label{thm:amgm}
+For any nonnegative real numbers $a_1, a_2, \dots, a_n$,
+\[
+\frac{a_1 + a_2 + \cdots + a_n}{n} \;\geq\; \sqrt[n]{a_1 a_2 \cdots a_n}.
+\]
+Equality holds if and only if $a_1 = a_2 = \cdots = a_n$.
+\end{theorem}
+
+\subsection{Significance}
+
+The AM--GM inequality is a workhorse of mathematical analysis and optimization. It frequently provides a quick way to establish lower bounds, prove other inequalities, and solve optimization problems without calculus. For instance, it immediately shows that among all rectangles of a fixed perimeter the square encloses the greatest area, since maximizing a product subject to a fixed sum forces the terms to be equal. The same idea appears throughout economics, physics, and computer science whenever a sum is constrained but a product is to be optimized.
+
+\subsection{Proof for two variables}
+
+We give a complete and rigorous proof of the two-variable case, which already captures the essential idea.
+
+\begin{theorem}[Two-variable AM--GM]\label{thm:amgm2}
+For all real numbers $a \geq 0$ and $b \geq 0$,
+\[
+\frac{a + b}{2} \;\geq\; \sqrt{ab},
+\]
+with equality if and only if $a = b$.
+\end{theorem}
+
+\begin{proof}
+Since $a \geq 0$ and $b \geq 0$, both $\sqrt{a}$ and $\sqrt{b}$ are well defined and real. Consider the square of their difference, which is nonnegative because the square of any real number is nonnegative:
+\[
+\left( \sqrt{a} - \sqrt{b} \right)^2 \geq 0.
+\]
+Expanding the left-hand side gives
+\[
+a - 2\sqrt{a}\sqrt{b} + b \geq 0,
+\]
+that is,
+\[
+a + b \geq 2\sqrt{ab}.
+\]
+Dividing both sides by $2$ yields
+\[
+\frac{a + b}{2} \geq \sqrt{ab},
+\]
+which is the desired inequality.
+
+It remains to characterize equality. The chain above shows the inequality is an equality precisely when $\left( \sqrt{a} - \sqrt{b} \right)^2 = 0$, which holds if and only if $\sqrt{a} = \sqrt{b}$, i.e.\ $a = b$.
+\end{proof}
+
+\begin{remark}
+The heart of the argument is the single fact that a real square is never negative. Everything else is algebra. This is why the AM--GM inequality is often one of the first nontrivial inequalities a student learns to prove.
+\end{remark}
+
+\subsection{Intuition behind the proof}
+
+The quantity $\left(\sqrt{a} - \sqrt{b}\right)^2$ measures how far apart the two numbers are once we pass to their square roots. When $a$ and $b$ are equal, this gap is zero and the two means coincide. As the numbers spread apart, the gap grows, and the arithmetic mean pulls ahead of the geometric mean. In other words, holding the sum $a + b$ fixed, the product $ab$ is largest when the numbers are balanced and shrinks as they become lopsided. The proof simply turns this geometric picture of a ``gap that is never negative'' into algebra.
+
+A second way to see the same idea: the geometric mean $\sqrt{ab}$ is the side of a square with the same area as an $a \times b$ rectangle, while the arithmetic mean is the side of the square reached by averaging the two side lengths. Reshaping a rectangle toward a square while keeping the perimeter fixed always increases the area, which is exactly the statement that $A \geq G$.
+
+\subsection{Worked example}
+
+\begin{example}
+Suppose we want the minimum value of
+\[
+f(x) = x + \frac{9}{x}, \qquad x > 0.
+\]
+Apply the two-variable AM--GM inequality to the two positive numbers $x$ and $9/x$:
+\[
+\frac{x + \dfrac{9}{x}}{2} \;\geq\; \sqrt{\,x \cdot \frac{9}{x}\,} = \sqrt{9} = 3.
+\]
+Multiplying by $2$ gives
+\[
+x + \frac{9}{x} \geq 6.
+\]
+By the equality condition of Theorem~\ref{thm:amgm2}, equality holds exactly when $x = 9/x$, that is, when $x^2 = 9$, so $x = 3$ (taking the positive root). Hence the minimum value of $f$ on $(0, \infty)$ is $6$, attained at $x = 3$, and we obtained it without any calculus.
+\end{example}
