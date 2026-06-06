@@ -1,0 +1,66 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Encoding and fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% ---math packages ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% --- Layout and graphics---
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+% --- Links and referrences ----
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+
+% --- Theorem-like environments ---
+% theorems and lemmas share italic body text and bold headers
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% definitions use upright body text
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+% Remarks are upright and lightly emphasized
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% The proof environment comes from amsthm and ends with a QED square
+
+% ---Title page information ---
+\title{\Huge Mathematical Proof Collection}
+\author{Sriram Varun Kumar}
+\date{\today}
+
+\begin{document}
+
+% --- Title page ---
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+    {\Huge\bfseries Mathematical Proof Collection\par}
+    \vspace{1.5cm}
+    {\Large A selection of classic proofs and derivations\par}
+    \vspace{2cm}
+    {\large Sriram Varun Kumar\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+% --- Table of contents ---
+\tableofcontents
+\newpage
+
+% --- Proofs ---
+% \input{proofs/am_gm_inequality.tex}
+
+\end{document}
