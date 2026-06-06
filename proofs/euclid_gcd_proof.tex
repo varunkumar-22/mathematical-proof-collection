@@ -1,0 +1,82 @@
+\section{Euclid's GCD Algorithm}
+
+Among the oldest algorithms still in everyday use is Euclid's method for computing the greatest common divisor of two integers. It is efficient, requires nothing beyond repeated division, and rests on a single clean fact about divisibility. We begin with the underlying definition.
+
+\begin{definition}[Greatest common divisor]
+Let $a$ and $b$ be integers, not both zero. An integer $d$ is a \emph{common divisor} of $a$ and $b$ if $d \mid a$ and $d \mid b$. The \emph{greatest common divisor} of $a$ and $b$, written $\gcd(a, b)$, is the largest such $d$.
+\end{definition}
+
+Here $d \mid a$ denotes that $d$ divides $a$, meaning $a = dk$ for some integer $k$. Since $1$ divides every integer, the set of common divisors is nonempty, and because it is bounded above by $\max(|a|, |b|)$, a largest element always exists. By convention $\gcd(a, 0) = |a|$ for $a \neq 0$.
+
+\subsection{Euclid's algorithm}
+
+The algorithm computes $\gcd(a, b)$ by repeated division with remainder. Recall the division algorithm: for integers $a$ and $b$ with $b \neq 0$, there exist unique integers $q$ (the quotient) and $r$ (the remainder) such that
+\[
+a = bq + r, \qquad 0 \leq r < |b|.
+\]
+Euclid's algorithm replaces the pair $(a, b)$ by the pair $(b, r)$ and repeats. Concretely, starting from $r_0 = a$ and $r_1 = b$, it produces the sequence of remainders
+\[
+r_{k-1} = r_k q_k + r_{k+1}, \qquad 0 \leq r_{k+1} < r_k,
+\]
+until a remainder of zero is reached. The last nonzero remainder is the greatest common divisor.
+
+\subsection{Why the algorithm works}
+
+The correctness of the algorithm comes down to a single lemma.
+
+\begin{lemma}\label{lem:gcd-step}
+Let $a$ and $b$ be integers with $b \neq 0$, and write $a = bq + r$ for integers $q$ and $r$. Then
+\[
+\gcd(a, b) = \gcd(b, r).
+\]
+\end{lemma}
+
+\begin{proof}
+We show that the pair $(a, b)$ and the pair $(b, r)$ have exactly the same common divisors; their greatest common divisors must then coincide.
+
+Suppose $d \mid a$ and $d \mid b$. Since $r = a - bq$ and $d$ divides both $a$ and $bq$, it divides their difference, so $d \mid r$. Hence $d$ is a common divisor of $b$ and $r$.
+
+Conversely, suppose $d \mid b$ and $d \mid r$. Since $a = bq + r$ and $d$ divides both $bq$ and $r$, it divides their sum, so $d \mid a$. Hence $d$ is a common divisor of $a$ and $b$.
+
+The two pairs therefore share the same set of common divisors, and in particular the same greatest common divisor.
+\end{proof}
+
+With the lemma in hand, correctness follows.
+
+\begin{theorem}[Correctness of Euclid's algorithm]\label{thm:euclid}
+Given integers $a$ and $b$ with $b \neq 0$, Euclid's algorithm terminates after finitely many steps, and the last nonzero remainder equals $\gcd(a, b)$.
+\end{theorem}
+
+\begin{proof}
+\emph{Termination.} The remainders satisfy
+\[
+r_1 > r_2 > r_3 > \cdots \geq 0,
+\]
+since each remainder is strictly smaller than the previous divisor. A strictly decreasing sequence of nonnegative integers cannot continue forever, so some remainder $r_{n+1}$ must equal $0$. The algorithm then stops.
+
+\emph{Correctness.} Applying Lemma~\ref{lem:gcd-step} at each step gives the chain of equalities
+\[
+\gcd(a, b) = \gcd(r_0, r_1) = \gcd(r_1, r_2) = \cdots = \gcd(r_{n-1}, r_n) = \gcd(r_n, 0).
+\]
+Since $\gcd(r_n, 0) = r_n$, the last nonzero remainder $r_n$ equals $\gcd(a, b)$.
+\end{proof}
+
+\begin{remark}
+The proof separates the two things an algorithm must satisfy: it must \emph{stop}, and it must return the \emph{right answer}. Termination is guaranteed by the well-ordering of the nonnegative integers, while correctness is guaranteed by Lemma~\ref{lem:gcd-step}, which says each step preserves the quantity we are after.
+\end{remark}
+
+\subsection{Worked example}
+
+\begin{example}
+We compute $\gcd(252, 105)$. Applying the division algorithm repeatedly:
+\begin{align*}
+252 &= 2 \cdot 105 + 42, \\
+105 &= 2 \cdot 42 + 21, \\
+42  &= 2 \cdot 21 + 0.
+\end{align*}
+The last nonzero remainder is $21$, so by Theorem~\ref{thm:euclid},
+\[
+\gcd(252, 105) = 21.
+\]
+We can confirm this directly: $252 = 21 \cdot 12$ and $105 = 21 \cdot 5$, and since $\gcd(12, 5) = 1$, no larger common divisor exists.
+\end{example}
