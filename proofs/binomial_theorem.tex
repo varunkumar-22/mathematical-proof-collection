@@ -1,0 +1,98 @@
+\section{The Binomial Theorem}
+
+The binomial theorem gives a closed formula for expanding a power of a sum, $(x + y)^n$, into a sum of monomials. It turns what would be a tedious repeated multiplication into a single expression governed by the binomial coefficients. We first introduce those coefficients, then state and prove the theorem, and finish with small examples.
+
+\subsection{Binomial coefficients}
+
+\begin{definition}[Binomial coefficient]
+For integers $n \geq 0$ and $0 \leq k \leq n$, the \emph{binomial coefficient} is
+\[
+\binom{n}{k} = \frac{n!}{k!\,(n-k)!},
+\]
+where $m! = 1 \cdot 2 \cdots m$ and $0! = 1$. By convention $\binom{n}{k} = 0$ when $k < 0$ or $k > n$.
+\end{definition}
+
+The coefficient $\binom{n}{k}$ counts the number of ways to choose $k$ objects from a set of $n$, which is why it is read ``$n$ choose $k$.'' Two facts about these numbers will be needed. First, the symmetry
+\[
+\binom{n}{k} = \binom{n}{n-k},
+\]
+which is immediate from the definition. Second, Pascal's rule, which is the engine behind the inductive proof.
+
+\begin{lemma}[Pascal's rule]\label{lem:pascal}
+For integers $n \geq 1$ and $1 \leq k \leq n$,
+\[
+\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}.
+\]
+\end{lemma}
+
+\begin{proof}
+Writing both terms on the right over a common denominator,
+\[
+\binom{n-1}{k-1} + \binom{n-1}{k}
+= \frac{(n-1)!}{(k-1)!\,(n-k)!} + \frac{(n-1)!}{k!\,(n-1-k)!}.
+\]
+Factoring out $\dfrac{(n-1)!}{k!\,(n-k)!}$ from both terms gives
+\[
+\frac{(n-1)!}{k!\,(n-k)!}\bigl(k + (n-k)\bigr) = \frac{(n-1)!\cdot n}{k!\,(n-k)!} = \frac{n!}{k!\,(n-k)!} = \binom{n}{k}. \qedhere
+\]
+\end{proof}
+
+\subsection{Statement of the theorem}
+
+\begin{theorem}[Binomial theorem]\label{thm:binomial}
+For any real (or complex) numbers $x$ and $y$ and any integer $n \geq 0$,
+\[
+(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^{k}.
+\]
+\end{theorem}
+
+\subsection{Proof}
+
+We prove the theorem by induction on $n$, using Pascal's rule in the inductive step.
+
+\begin{proof}
+\emph{Base case.} For $n = 0$, the left-hand side is $(x+y)^0 = 1$ and the right-hand side is $\binom{0}{0} x^0 y^0 = 1$. The two agree.
+
+\emph{Inductive step.} Assume the formula holds for some integer $n \geq 0$:
+\[
+(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^{k}.
+\]
+Multiplying both sides by $(x + y)$,
+\[
+(x + y)^{n+1} = (x + y)\sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^{k}
+= \sum_{k=0}^{n} \binom{n}{k} x^{n-k+1} y^{k} + \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^{k+1}.
+\]
+Shift the index in the second sum by setting $j = k+1$, so it becomes $\sum_{j=1}^{n+1} \binom{n}{j-1} x^{n-j+1} y^{j}$. Renaming $j$ back to $k$ and combining with the first sum, the coefficient of $x^{n+1-k} y^{k}$ for $1 \leq k \leq n$ is
+\[
+\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k},
+\]
+by Pascal's rule (Lemma~\ref{lem:pascal}). The endpoint terms $k = 0$ and $k = n+1$ have coefficients $\binom{n}{0} = \binom{n+1}{0} = 1$ and $\binom{n}{n} = \binom{n+1}{n+1} = 1$. Therefore
+\[
+(x + y)^{n+1} = \sum_{k=0}^{n+1} \binom{n+1}{k} x^{n+1-k} y^{k},
+\]
+which is the formula for $n+1$. By induction, the theorem holds for all integers $n \geq 0$.
+\end{proof}
+
+\begin{remark}
+There is also a purely combinatorial argument: expanding $(x+y)^n = (x+y)(x+y)\cdots(x+y)$ means choosing either $x$ or $y$ from each of the $n$ factors. A term $x^{n-k} y^{k}$ arises exactly once for each way of selecting which $k$ of the $n$ factors contribute a $y$, and there are $\binom{n}{k}$ such selections. This explains why the binomial coefficients are precisely the expansion coefficients.
+\end{remark}
+
+\subsection{Examples for small powers}
+
+\begin{example}
+Expanding the first few powers directly from Theorem~\ref{thm:binomial}:
+\begin{align*}
+(x + y)^2 &= x^2 + 2xy + y^2, \\
+(x + y)^3 &= x^3 + 3x^2 y + 3x y^2 + y^3, \\
+(x + y)^4 &= x^4 + 4x^3 y + 6x^2 y^2 + 4x y^3 + y^4.
+\end{align*}
+The coefficients $1,2,1$ then $1,3,3,1$ then $1,4,6,4,1$ are exactly the rows of Pascal's triangle, each entry being the sum of the two above it, in agreement with Pascal's rule.
+\end{example}
+
+\begin{example}
+Setting $x = y = 1$ in the theorem gives a tidy identity:
+\[
+2^n = (1 + 1)^n = \sum_{k=0}^{n} \binom{n}{k}.
+\]
+So the sum of the entries in row $n$ of Pascal's triangle is $2^n$, matching the fact that a set of $n$ elements has $2^n$ subsets.
+\end{example}
